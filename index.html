@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello World!</title>
+  </head>
+  <body>
+    <center class="wclock">
+    <h3 id="wclocktitle">World Clock</h3>
+    <li class="divider"></li>
+    <p id="instr">Select a major city near your area for the time:</p>
+    <div id="selectmenu">   
+      <select name="city" size="1" onchange="updateTime(this);" class="form-control"> 
+        <option value="" selected>Local time</option>
+        <option value="2">Amsterdam</option>
+        <option value="3">Ankara</option>
+        <option value="3">Athens</option>
+        <option value="3">Baghdad</option>
+        <option value="7">Bangkok</option>
+        <option value="8">Beijing</option>
+        <option value="2">Berlin</option>
+        <option value="-5">Bogota</option>
+        <option value="2">Brussels</option>
+        <option value="2">Budapest</option>
+        <option value="-3">Buenos Aires</option>
+        <option value="2">Cairo</option>
+        <option value="-5">Chicago</option>
+        <option value="3">Damascus</option>
+        <option value="1">Dublin</option>
+        <option value="3">Helsinki</option>
+        <option value="7">Ho Chi Minh</option>
+        <option value="8">Hong Kong</option>
+        <option value="-10">Honolulu</option>
+        <option value="-5">Houston</option>
+        <option value="3">Istanbul</option>
+        <option value="7">Jakarta</option>
+        <option value="3">Jerusalem</option>
+        <option value="5">Karachi</option>
+        <option value="-5">Lima</option>
+        <option value="1">Lisbon</option>
+        <option value="0">London</option>
+        <option value="-7">Los Angeles</option>
+        <option value="2">Madrid</option>
+        <option value="8">Manila</option>
+        <option value="-5">Mexico City</option>
+        <option value="3">Moscow</option>
+        <option value="-4">New York</option>
+        <option value="2">Oslo</option>
+        <option value="2">Paris</option>
+        <option value="2">Prague</option>
+        <option value="9">Pyongyang</option>
+        <option value="-3">Rio de Janeiro</option> 
+        <option value="2">Rome</option>
+        <option value="-7">San Francisco</option>
+        <option value="-3">Santiago</option>
+        <option value="-3">Sao Paolo</option>
+        <option value="9">Seoul</option>
+        <option value="8">Shanghai</option>
+        <option value="8">Singapore</option>
+        <option value="2">Stockholm</option>
+        <option value="10">Sydney</option>
+        <option value="8">Taipei</option>
+        <option value="9">Tokyo</option> 
+        <option value="-4">Washington D.C.</option>
+      </select>
+      
+      <script type="text/javascript">
+        if(document.getElementById)
+          document.write('<br><strong id="timeis">The time is </strong><span id="worldclock"></span><br/>')
+
+        isLocal = true;
+        amOrPm = '';
+        zone = 0;
+
+        function updateTime(where){
+          zone = where.options[where.selectedIndex].value;
+          if(where.options[0].selected)
+            isLocal = true;
+          else
+            isLocal = false;
+        }
+
+        function GetTime(){
+          now = new Date();
+          hrOffset = now.getTimezoneOffset()/60;
+          second = now.getSeconds();
+          minute = now.getMinutes();
+          hour = now.getHours();
+
+          if(!isLocal)
+            hour += parseInt(hrOffset) + parseInt(zone);
+          if(hour > 23) 
+            hour -= 24;
+          if(hour < 0) 
+            hour += 24;
+          if(hour > 11)
+            amOrPm = "PM";
+          else
+            amOrPm = "AM";
+
+          hr_12 = hour;
+          if(hr_12 == 0)
+            hr_12 = 12;
+          if(hr_12 > 12)
+            hr_12 %= 12;
+
+          if(hr_12 < 10)
+            hr_12 = "0"+hr_12;
+          if(minute < 10)
+            minute = "0"+minute;
+          if(second < 10)
+            second = "0"+second;
+
+          var time = hr_12+':'+minute+':'+second+' '+amOrPm;
+
+          if(document.all)
+            worldclock.innerHTML = time;
+          else if(document.getElementById)
+            document.getElementById("worldclock").innerHTML = time;
+          else if(document.layers){
+            document.worldclockns.document.worldclockns2.document.write(time);
+            document.worldclockns.document.worldclockns2.document.close();
+          }
+
+          setTimeout('GetTime()',1000);
+        }
+        window.onload=GetTime;
+      </script>
+    </div>
+  	</center>
+  </body>
+</html>
