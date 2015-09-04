@@ -23,10 +23,12 @@ app.on('ready', function() {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600});
 
+  // get size of window to draw canvas
+  var mainWindowSize = mainWindow.getSize();
+
   // and load the index.html of the app.
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
-  // Open the devtools.
   mainWindow.openDevTools();
 
   // Emitted when the window is closed.
