@@ -4,14 +4,20 @@
     <title>Snake</title>
     <!-- Jquery -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
+
+    <div id="scoreScreen">
+      <div id="scoreContent">
+        <h2 id="score"></h2>
+        <button id="replayBtn">Play Again</button>
+      </div>
+    </div>
     <canvas id="canvas" width="700" height="500"></canvas>
     <script>
-      /*
-      TODO: 
-      big food
-      */
       $(document).ready(function(){
         // Canvas stuff
         var canvas = document.getElementById('canvas');
@@ -42,18 +48,27 @@
           // default direction
           dir = "right";
 
+          snake_array = [];
+          walls_array = [];
           create_snake();
           create_objects();
           score = 0;
           speed = 70;
-          walls_array = [];
           
           // move the snake using a timer which will trigger the paint function based on speed variable
           setGameSpeed(speed);
+
+          // play again button
+          document.getElementById('replayBtn').onclick = replay;
         }
 
         init();
-    
+
+        function replay(){
+          document.getElementById('scoreScreen').style.display = 'none';
+          init();
+        }
+
         function setGameSpeed(speed){
           if(typeof game_loop != "undefined") 
             clearInterval(game_loop);
@@ -143,19 +158,12 @@
           // game over check (if snake head hits wall or its own body)
           if(nx == -1 || nx == w/cw || ny == -1 || ny == h/cw || check_collision(nx, ny, snake_array.concat(walls_array))){
             // restart game
-            init();
-            return;
-
-            /*
+            //init();
+            //return;
+            
             clearInterval(game_loop);
-            document.write("Score: " + score);
-            var restart = document.createElement('button');
-            restart.textContent = "Play Again";
-            restart.addEventListener('click', function(){
-              init();
-            })
-            document.body.appendChild(restart);
-            */
+            document.getElementById('score').innerHTML = "Score: " + score;
+            document.getElementById('scoreScreen').style.display = 'block';
           }
           
           // food was eaten
@@ -259,7 +267,7 @@
           }
           return false;
         }
-        
+
         // keyboard controls
         $(document).keydown(function(e){
           var key = e.which;
