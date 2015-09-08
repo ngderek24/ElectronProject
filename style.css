@@ -1,0 +1,16 @@
+#scoreScreen{
+	position: absolute;
+	z-index: 101;
+	width: 700px;
+	height: 500px;
+	background-color: rgba(0, 0, 0, 0.7);
+	display: none;
+}
+
+#scoreContent{
+	width: 700px;
+	height: 500px;
+	margin: 0 auto;
+	text-align: center;
+	color: white;
+}
